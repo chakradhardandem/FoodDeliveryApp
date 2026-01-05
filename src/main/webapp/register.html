@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>User Form</title>
+
+    <style>
+        /* ===== GLOBAL RESET ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+
+        /* ===== BODY (SCROLL FIX) ===== */
+        body {
+            min-height: 100vh;
+            background: #0a0a0f;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;   /* 🔑 allow vertical flow */
+            padding: 40px 0;
+            color: #ffffff;
+            overflow-y: auto;          /* 🔑 ENABLE SCROLL */
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background:
+                radial-gradient(circle at 20% 80%, rgba(120,119,198,0.3), transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(255,119,198,0.3), transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(120,219,255,0.2), transparent 50%);
+            z-index: -1;
+            animation: float 20s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%,100% { transform: scale(1) rotate(0deg); }
+            50% { transform: scale(1.1) rotate(180deg); }
+        }
+
+        /* ===== FORM CONTAINER ===== */
+        .form-container {
+            width: 420px;
+            background: rgba(20,20,30,0.95);
+            backdrop-filter: blur(25px);
+            padding: 35px;
+            border-radius: 22px;
+            border: 1px solid rgba(255,255,255,0.12);
+            box-shadow: 0 30px 60px rgba(0,0,0,0.6);
+            animation: fadeUp 0.8s ease;
+        }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ===== HEADING ===== */
+        .form-container h1 {
+            text-align: center;
+            margin-bottom: 28px;
+            font-size: 2.2rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #ff6bcb, #43e97b, #667eea);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* ===== FORM GROUP ===== */
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        label {
+            display: block;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 6px;
+            color: #b0b0b8;
+        }
+
+        /* ===== INPUTS ===== */
+        input,
+        textarea,
+        select {
+            width: 100%;
+            padding: 12px 14px;
+            border-radius: 10px;
+            background: rgba(15,15,25,0.9);
+            border: 1px solid rgba(255,255,255,0.15);
+            color: #ffffff;
+            outline: none;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+        textarea {
+            resize: none;
+        }
+
+        input::placeholder,
+        textarea::placeholder {
+            color: #8b8b98;
+        }
+
+        input:focus,
+        textarea:focus,
+        select:focus {
+            border-color: #ff6bcb;
+            box-shadow: 0 0 14px rgba(255,107,203,0.4);
+            transform: scale(1.02);
+        }
+
+        /* ===== SELECT ===== */
+        select option {
+            background: #0a0a0f;
+            color: #ffffff;
+        }
+
+        /* ===== SUBMIT BUTTON ===== */
+        .btn-submit {
+            width: 100%;
+            margin-top: 18px;
+            padding: 14px;
+            border-radius: 50px;
+            border: none;
+            font-size: 1rem;
+            font-weight: 800;
+            cursor: pointer;
+            color: #020617;
+            background: linear-gradient(135deg, #ff6bcb, #43e97b);
+            transition: all 0.35s ease;
+            box-shadow: 0 10px 30px rgba(255,107,203,0.35);
+        }
+
+        .btn-submit:hover {
+            transform: translateY(-4px) scale(1.02);
+            box-shadow: 0 20px 45px rgba(67,233,123,0.5);
+        }
+
+        .btn-submit:active {
+            transform: scale(0.97);
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 480px) {
+            .form-container {
+                width: 92%;
+                padding: 30px 22px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="form-container">
+        <h1>User Details</h1>
+        <form action="register" method="post">
+
+            <div class="form-group">
+                <label>UserName</label>
+                <input type="text" name="username" placeholder="Enter username" required />
+            </div>
+
+            <div class="form-group">
+                <label>Password</label>
+                <input type="password" name="password" placeholder="Enter password" required />
+            </div>
+
+            <div class="form-group">
+                <label>Email</label>
+                <input type="email" name="email" placeholder="Enter email" required />
+            </div>
+
+            <div class="form-group">
+                <label>PhoneNumber</label>
+                <input type="tel" name="phone" placeholder="Enter phone number" required />
+            </div>
+
+            <div class="form-group">
+                <label>Address</label>
+                <textarea name="address" rows="3" placeholder="Enter address" required></textarea>
+            </div>
+
+            <div class="form-group">
+                <label>Role</label>
+                <select name="role" required>
+                    <option value="" disabled selected>Select role</option>
+                    <option value="Customer">Customer</option>
+                    <option value="Deliver_Agent">Deliver_Agent</option>
+                    <option value="Restaurant_Admin">Restaurant_Admin</option>
