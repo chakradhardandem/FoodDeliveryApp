@@ -141,3 +141,242 @@ The project uses a MySQL database named `courseproject`. The core tables are:
 ## 📝 Author
 Developed as a Dynamic Web Project.
 **Keywords:** Java, Servlets, JSP, JDBC, MySQL, Web Development.
+
+
+---
+# Project Work-Flow
+
+# FoodieHub – Java JEE Food Delivery Web Application
+
+FoodieHub is a Java JEE dynamic web application built using the MVC (Model–View–Controller) architecture.
+It allows users to browse restaurants, view menus, manage a cart, register or log in, place orders, and persist data in a MySQL database.
+
+---
+
+## Tech Stack
+
+- Java (JEE)
+- JSP & Servlets
+- JDBC
+- MySQL
+- Apache Tomcat
+- HTML, CSS
+- MVC Architecture
+
+---
+
+## Architecture Overview
+
+### Model Layer
+
+POJO classes represent database entities and map directly to tables in the `courseproject` database.
+
+- User
+- Restaurant
+- Menu
+- Order
+- OrderItem
+- Cart
+- CartItem
+
+Foreign key relationship example:
+```
+menu.restaurantId -> restaurant.restaurantid
+```
+
+Database connection:
+```
+jdbc:mysql://localhost:3306/courseproject
+username: root
+password: HHHhhh1
+```
+
+DAO implementations use JDBC with PreparedStatements.
+
+---
+
+### Controller Layer
+
+Servlets handle HTTP requests and application logic.
+
+- RestaurantServlet
+- MenuServlet
+- CartServlet
+- RegisterServlet
+- LoginServlet
+- CheckoutServlet
+
+Servlet mapping example:
+```
+/restaurant
+```
+
+---
+
+### View Layer
+
+JSP pages render dynamic content with CSS styling.
+
+- restaurant.jsp
+- menu.jsp
+- cart.jsp
+- checkout.jsp
+- orderConfirmation.jsp
+
+---
+
+## Application Startup Flow
+
+The application is deployed on Apache Tomcat.
+
+Welcome page:
+```
+restaurant.jsp
+```
+
+RestaurantServlet fetches restaurant data and forwards it to the view.
+No login is required for browsing.
+
+---
+
+## User Registration and Login
+
+### Registration
+
+Form:
+```
+register.html
+```
+
+Request:
+```
+POST /register
+```
+
+User data is stored in the `users` table.
+
+---
+
+### Login
+
+Form:
+```
+login.html
+```
+
+Request:
+```
+POST /Login
+```
+
+LoginServlet:
+- Validates credentials
+- Tracks failed attempts (max 3)
+- Stores user in HttpSession
+
+On success:
+```
+cart.jsp
+```
+
+---
+
+## Browsing and Cart Management
+
+Restaurant selection:
+```
+GET /menu?restaurantId=ID
+```
+
+Add to cart:
+```
+POST /cart
+action=add
+itemId
+restaurantId
+quantity
+```
+
+Cart stored in session as:
+```
+HashMap<Integer, CartItem>
+```
+
+CartServlet:
+- Add item
+- Update quantity
+- Remove item
+- Calculate total
+- Restrict multiple restaurants
+
+---
+
+## Checkout and Order Placement
+
+Proceed from cart to checkout.
+
+Request:
+```
+POST /checkout
+```
+
+CheckoutServlet:
+- Validates user and cart
+- Creates Order
+- Inserts OrderItems
+- Clears cart session
+
+Order status:
+```
+pending
+```
+
+---
+
+## Database Tables
+
+- users
+- restaurant
+- menu
+- order
+- orderitem
+
+Image storage:
+```
+/images/restaurants/rest1.jpg
+```
+
+---
+
+## Application Flow Diagram
+
+```mermaid
+flowchart TD
+A[User] --> B[RestaurantServlet]
+B --> C[restaurant.jsp]
+C --> D[Select Restaurant]
+D --> E[MenuServlet]
+E --> F[menu.jsp]
+F --> G[Add to Cart]
+G --> H[CartServlet]
+H --> I[cart.jsp]
+I --> J{Logged In?}
+J -- No --> K[Login/Register]
+J -- Yes --> L[checkout.jsp]
+L --> M[CheckoutServlet]
+M --> N[Order Created]
+N --> O[Order Items Saved]
+O --> P[Cart Cleared]
+P --> Q[orderConfirmation.jsp]
+Q --> C
+```
+
+---
+
+## Notes
+
+- JDBC via DriverManager (no connection pooling)
+- Session-based authentication and cart
+- Clean MVC separation
+- Academic project ready
+
