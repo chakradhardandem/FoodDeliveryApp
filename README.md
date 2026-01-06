@@ -188,7 +188,7 @@ Database connection:
 ```
 jdbc:mysql://localhost:3306/courseproject
 username: root
-password: HHHhhh1
+password: ******
 ```
 
 DAO implementations use JDBC with PreparedStatements.
